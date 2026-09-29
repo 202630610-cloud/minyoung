@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>페브리즘 (Febrizm) - 교실 땀냄새 방멸 프로젝트</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;800&display=swap');
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    
+    /* 배경 이미지 스타일: 중학교 3학년 파란색 체육복을 입은 남학생 느낌의 스포츠/학생 배경 */
+    .bg-student {
+      background-image: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75)), 
+                        url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1920&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* 향기 애니메이션 효과 */
+    @keyframes scentSpread {
+      0% {
+        transform: scale(0.5);
+        opacity: 0.2;
+      }
+      50% {
+        transform: scale(1.8);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(2.2);
+        opacity: 0.4;
+      }
+    }
+
+    .scent-aura {
+      animation: scentSpread 2s infinite alternate ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-student min-h-screen text-slate-100 flex flex-col justify-between">
+
+  <!-- Header -->
+  <header class="p-6 text-center backdrop-blur-md bg-slate-900/40 border-b border-slate-700/50">
+    <h1 class="text-3xl md:text-4xl font-extrabold text-sky-400 tracking-wider flex items-center justify-center gap-2">
+      <i class="fa-solid font-spray-can text-sky-300"></i> Febrizm (페브리즘)
+    </h1>
+    <p class="text-sm md:text-base text-slate-300 mt-1">교실 땀냄새 방멸 작전! 골든타임을 사수하라 🫧</p>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="container mx-auto px-4 py-8 max-w-3xl flex-grow">
+    
+    <!-- Step Progress -->
+    <div class="flex justify-between items-center mb-8 px-4 max-w-md mx-auto text-xs md:text-sm">
+      <div id="p-step1" class="font-bold text-sky-400">1. 시간대</div>
+      <i class="fa-solid fa-chevron-right text-slate-500"></i>
+      <div id="p-step2" class="text-slate-400">2. 땀나는 자리</div>
+      <i class="fa-solid fa-chevron-right text-slate-500"></i>
+      <div id="p-step3" class="text-slate-400">3. 향기 선택</div>
+      <i class="fa-solid fa-chevron-right text-slate-500"></i>
+      <div id="p-step4" class="text-slate-400">4. 미션 개시</div>
+    </div>
+
+    <!-- STEP 1: 시간대 선택 -->
+    <section id="step1" class="backdrop-blur-lg bg-slate-800/70 p-6 md:p-8 rounded-2xl border border-slate-700 shadow-2xl">
+      <h2 class="text-xl md:text-2xl font-bold mb-4 text-center text-sky-300">
+        <i class="fa-regular fa-clock mr-2"></i>운동을 완료한 시간대를 선택하세요
+      </h2>
+      <p class="text-center text-slate-300 text-sm mb-6">격한 축구/농구 후 수업을 시작하기 직전 시간입니다.</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <button onclick="selectTime('아침 시간')" class="time-btn p-4 rounded-xl border border-slate-600 bg-slate-700/50 hover:bg-sky-600/50 hover:border-sky-400 transition font-semibold text-left flex justify-between items-center">
+          <span>🌅 아침 시간 (등교 직후)</span>
+          <i class="fa-solid fa-arrow-right text-xs opacity-50"></i>
+        </button>
+        <button onclick="selectTime('1교시 쉬는시간')" class="time-btn p-4 rounded-xl border border-slate-600 bg-slate-700/50 hover:bg-sky-600/50 hover:border-sky-400 transition font-semibold text-left flex justify-between items-center">
+          <span>🔔 1교시 쉬는시간</span>
+          <i class="fa-solid fa-arrow-right text-xs opacity-50"></i>
+        </button>
+        <button onclick="selectTime('2교시 쉬는시간')" class="time-btn p-4 rounded-xl border border-slate-600 bg-slate-700/50 hover:bg-sky-600/50 hover:border-sky-400 transition font-semibold text-left flex justify-between items-center">
+          <span>🔔 2교시 쉬는시간</span>
+          <i class="fa-solid fa-arrow-right text-xs opacity-50"></i>
+        </button>
+        <button onclick="selectTime('3교시 쉬는시간')" class="time-btn p-4 rounded-xl border border-slate-600 bg-slate-700/50 hover:bg-sky-600/50 hover:border-sky-400 transition font-semibold text-left flex justify-between items-center">
+          <span>🔔 3교시 쉬는시간</span>
+          <i class="fa-solid fa-arrow-right text-xs opacity-50"></i>
+        </button>
+        <button onclick="selectTime('점심시간')" class="time-btn col-span-1 md:col-span-2 p-4 rounded-xl border border-amber-500/50 bg-amber-500/10 hover:bg-amber-600/30 transition font-semibold text-left flex justify-between items-center">
+          <span class="text-amber-300">⚽ 점심시간 (땀 지수 최고조!)</span>
+          <i class="fa-solid fa-fire text-amber-400"></i>
+        </button>
+        <button onclick="selectTime('5교시 쉬는시간')" class="time-btn p-4 rounded-xl border border-slate-600 bg-slate-700/50 hover:bg-sky-600/50 hover:border-sky-400 transition font-semibold text-left flex justify-between items-center">
+          <span>🔔 5교시 쉬는시간</span>
+          <i class="fa-solid fa-arrow-right text-xs opacity-50"></i>
+        </button>
+        <button onclick="selectTime('6교시 쉬는시간')" class="time-btn p-4 rounded-xl border border-slate-600 bg-slate-700/50 hover:bg-sky-600/50 hover:border-sky-400 transition font-semibold text-left flex justify-between items-center">
+          <span>🔔 6교시 쉬는시간</span>
+          <i class="fa-solid fa-arrow-right text-xs opacity-50"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 2: 땀난 친구 자리 선택 -->
+    <section id="step2" class="hidden backdrop-blur-lg bg-slate-800/70 p-6 md:p-8 rounded-2xl border border-slate-700 shadow-2xl">
+      <h2 class="text-xl md:text-2xl font-bold mb-2 text-center text-sky-300">
+        <i class="fa-solid fa-users-viewfinder mr-2"></i>땀나는 친구들의 자리를 선택하세요
+      </h2>
+      <p class="text-center text-slate-300 text-sm mb-4">운동 후 교실로 돌아온 친구들 자리를 클릭해 주세요. (다중 선택 가능)</p>
+      
+      <!-- 교실 배치도 -->
+      <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700 mb-6">
+        <div class="w-full py-2 bg-slate-700 text-center font-bold text-slate-300 rounded mb-4 text-xs tracking-widest">
+          [ 칠판 / 교탁 위치 ]
+        </div>
+        <div id="classroom-grid" class="grid grid-cols-5 gap-2 max-w-md mx-auto">
+          <!-- JS로 5x5 자리 자동 생성 -->
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <button onclick="goToStep(1)" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm">
+          <i class="fa-solid fa-arrow-left mr-1"></i> 이전
+        </button>
+        <button onclick="submitSeats()" class="px-6 py-2 bg-sky-500 hover:bg-sky-400 rounded-lg font-bold text-slate-900">
+          다음: 향기 선택 <i class="fa-solid fa-arrow-right ml-1"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 3: 페브리즘 향기 선택 -->
+    <section id="step3" class="hidden backdrop-blur-lg bg-slate-800/70 p-6 md:p-8 rounded-2xl border border-slate-700 shadow-2xl">
+      <h2 class="text-xl md:text-2xl font-bold mb-2 text-center text-sky-300">
+        <i class="fa-solid fa-spray-can-sparkles mr-2"></i>뿌릴 페브리즘 향기를 골라주세요
+      </h2>
+      <p class="text-center text-slate-300 text-sm mb-6">상황에 가장 알맞은 특효 향기를 선택합니다.</p>
+
+      <div class="grid grid-cols-2 gap-4 mb-6">
+        <div onclick="selectScent('🍑 복숭아향', 'rgba(251, 146, 60, 0.6)')" class="scent-card cursor-pointer p-5 rounded-xl border border-slate-600 bg-slate-700/40 hover:border-orange-400 hover:bg-orange-500/10 transition text-center">
+          <div class="text-4xl mb-2">🍑</div>
+          <div class="font-bold text-orange-300">복숭아향</div>
+          <p class="text-xs text-slate-400 mt-1">달콤 상큼하게 냄새 제압</p>
+        </div>
+        <div onclick="selectScent('🫧 기본향', 'rgba(56, 189, 248, 0.6)')" class="scent-card cursor-pointer p-5 rounded-xl border border-slate-600 bg-slate-700/40 hover:border-sky-400 hover:bg-sky-500/10 transition text-center">
+          <div class="text-4xl mb-2">🫧</div>
+          <div class="font-bold text-sky-300">기본향 (클린)</div>
+          <p class="text-xs text-slate-400 mt-1">깨끗하고 호불호 없는 정석</p>
+        </div>
+        <div onclick="selectScent('🍋 레몬향', 'rgba(250, 204, 21, 0.6)')" class="scent-card cursor-pointer p-5 rounded-xl border border-slate-600 bg-slate-700/40 hover:border-yellow-400 hover:bg-yellow-500/10 transition text-center">
+          <div class="text-4xl mb-2">🍋</div>
+          <div class="font-bold text-yellow-300">레몬향</div>
+          <p class="text-xs text-slate-400 mt-1">톡 쏘는 청량함으로 악취 제거</p>
+        </div>
+        <div onclick="selectScent('🪻 라벤더향', 'rgba(192, 132, 252, 0.6)')" class="scent-card cursor-pointer p-5 rounded-xl border border-slate-600 bg-slate-700/40 hover:border-purple-400 hover:bg-purple-500/10 transition text-center">
+          <div class="text-4xl mb-2">🪻</div>
+          <div class="font-bold text-purple-300">라벤더향</div>
+          <p class="text-xs text-slate-400 mt-1">차분하고 편안하게 퍼지는 향</p>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center">
+        <button onclick="goToStep(2)" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm">
+          <i class="fa-solid fa-arrow-left mr-1"></i> 이전
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 4: 결과 및 미션 실행 -->
+    <section id="step4" class="hidden backdrop-blur-lg bg-slate-800/80 p-6 md:p-8 rounded-2xl border border-sky-500/40 shadow-2xl">
+      <div class="text-center mb-6">
+        <span class="bg-sky-500/20 text-sky-300 text-xs px-3 py-1 rounded-full border border-sky-400/30">작전 리포트</span>
+        <h2 class="text-2xl font-extrabold text-white mt-2">🔥 페브리즘 분사 시뮤레이션</h2>
+      </div>
+
+      <!-- 향기 확산 배치도 -->
+      <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-700 mb-6 relative overflow-hidden">
+        <div class="w-full py-1 bg-slate-800 text-center text-xs text-slate-400 rounded mb-4">칠판 방향</div>
+        <div id="result-grid" class="grid grid-cols-5 gap-2 max-w-md mx-auto relative z-10">
+          <!-- JS로 결과 자리 표기 -->
+        </div>
+      </div>
+
+      <!-- 분석 결과 및 가이드 카드 -->
+      <div class="space-y-4 mb-6">
+        <div class="p-4 bg-slate-700/40 rounded-xl border border-slate-600 flex items-start gap-3">
+          <i class="fa-solid fa-stopwatch text-2xl text-amber-400 mt-1"></i>
+          <div>
+            <div class="font-bold text-amber-300">골든 타임 가이드</div>
+            <p id="golden-time-text" class="text-sm text-slate-300 mt-1"></p>
+          </div>
+        </div>
+
+        <div class="p-4 bg-slate-700/40 rounded-xl border border-slate-600 flex items-start gap-3">
+          <i class="fa-solid fa-route text-2xl text-sky-400 mt-1"></i>
+          <div>
+            <div class="font-bold text-sky-300">추천 분사 동선 & 팁</div>
+            <p id="route-text" class="text-sm text-slate-300 mt-1"></p>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="resetAll()" class="w-full py-3 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl transition flex items-center justify-center gap-2">
+        <i class="fa-solid fa-rotate-right"></i> 다시 선택하기
+      </button>
+    </section>
+
+  </main>
+
+  <!-- Sub-banner: 중3 파란 체육복 학생 분위기 언급 요약 -->
+  <footer class="p-4 text-center text-xs text-slate-400 backdrop-blur-md bg-slate-900/60 border-t border-slate-800">
+    <p>⚡ 중학교 3학년 체육시간 필수템 | 쾌적한 교실 환경 만들기 프로젝트</p>
+  </footer>
+
+  <!-- JavaScript Logic -->
+  <script>
+    let selectedTime = '';
+    let selectedSeats = [];
+    let selectedScent = '';
+    let scentColor = 'rgba(56, 189, 248, 0.6)';
+
+    // Step 이동
+    function goToStep(stepNumber) {
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`step${i}`).classList.add('hidden');
+        document.getElementById(`p-step${i}`).className = 'text-slate-400';
+      }
+      document.getElementById(`step${stepNumber}`).classList.remove('hidden');
+      document.getElementById(`p-step${stepNumber}`).className = 'font-bold text-sky-400';
+    }
+
+    // Step 1: 시간대 선택
+    function selectTime(time) {
+      selectedTime = time;
+      initClassroomGrid();
+      goToStep(2);
+    }
+
+    // Step 2: 교실 배치도 초기화 (5x5)
+    function initClassroomGrid() {
+      const grid = document.getElementById('classroom-grid');
+      grid.innerHTML = '';
+      selectedSeats = [];
+
+      for (let i = 1; i <= 25; i++) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'seat-btn aspect-square bg-slate-800 border border-slate-600 rounded-lg flex flex-col items-center justify-center hover:border-sky-400 transition text-xs font-semibold text-slate-300';
+        btn.innerHTML = `<span>${i}</span>`;
+        btn.onclick = () => toggleSeat(i, btn);
+        grid.appendChild(btn);
+      }
+    }
+
+    // 자리 선택 토글
+    function toggleSeat(seatNum, element) {
+      const index = selectedSeats.indexOf(seatNum);
+      if (index > -1) {
+        selectedSeats.splice(index, 1);
+        element.classList.remove('bg-amber-500/30', 'border-amber-400', 'text-amber-300');
+        element.classList.add('bg-slate-800', 'border-slate-600', 'text-slate-300');
+        element.innerHTML = `<span>${seatNum}</span>`;
+      } else {
+        selectedSeats.push(seatNum);
+        element.classList.remove('bg-slate-800', 'border-slate-600', 'text-slate-300');
+        element.classList.add('bg-amber-500/30', 'border-amber-400', 'text-amber-300');
+        element.innerHTML = `<span>${seatNum}</span><span class="text-xs">💦</span>`;
+      }
+    }
+
+    // Step 2 제출
+    function submitSeats() {
+      if (selectedSeats.length === 0) {
+        alert('땀 흘린 친구의 자리를 최소 1개 이상 선택해 주세요!');
+        return;
+      }
+      goToStep(3);
+    }
+
+    // Step 3: 향기 선택 및 결과 생성
+    function selectScent(scent, color) {
+      selectedScent = scent;
+      scentColor = color;
+      renderResult();
+      goToStep(4);
+    }
+
+    // Step 4: 결과 화면 렌더링
+    function renderResult() {
+      const grid = document.getElementById('result-grid');
+      grid.innerHTML = '';
+
+      for (let i = 1; i <= 25; i++) {
+        const cell = document.createElement('div');
+        const isSweaty = selectedSeats.includes(i);
+        
+        cell.className = `aspect-square rounded-lg flex flex-col items-center justify-center text-xs relative ${
+          isSweaty ? 'border-2 border-sky-300 font-bold bg-slate-800' : 'bg-slate-800/40 border border-slate-700 text-slate-500'
+        }`;
+        
+        cell.innerHTML = `<span>${i}</span>`;
+
+        if (isSweaty) {
+          // 향기 오라 애니메이션 표시
+          const aura = document.createElement('div');
+          aura.className = 'scent-aura absolute inset-0 rounded-lg pointer-events-none';
+          aura.style.backgroundColor = scentColor;
+          cell.appendChild(aura);
+
+          const icon = document.createElement('span');
+          icon.className = 'text-xs z-10';
+          icon.innerText = '💦';
+          cell.appendChild(icon);
+        }
+
+        grid.appendChild(cell);
+      }
+
+      // 가이드 텍스트 자동 생성
+      document.getElementById('golden-time-text').innerText = 
+        `현재 선택된 [${selectedTime}] 기준: 수업 시작 3분 전, 복도/뒷문 창문을 모두 열고 집중 분사하는 것이 가장 효과적입니다.`;
+
+      document.getElementById('route-text').innerText = 
+        `선택한 땀난 자리(${selectedSeats.join(', ')}번)를 중심으로 공중에 ${selectedScent}를 3회씩 대각선 방향으로 뿌려주세요. 바람이 통하도록 앞문과 뒷문을 열어두면 1분 내로 향기가 완벽하게 퍼집니다!`;
+    }
+
+    // 리셋
+    function resetAll() {
+      selectedTime = '';
+      selectedSeats = [];
+      selectedScent = '';
+      goToStep(1);
+    }
+  </script>
+</body>
+</html>
